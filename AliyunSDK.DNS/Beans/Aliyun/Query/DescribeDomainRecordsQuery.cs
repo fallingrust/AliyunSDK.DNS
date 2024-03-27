@@ -1,11 +1,11 @@
 ﻿using AliyunSDK.DNS.Beans.Base;
 using System.Collections.Generic;
 
-namespace AliyunSDK.DNS.Beans.Aliyun
+namespace AliyunSDK.DNS.Beans.Aliyun.Query
 {
     public class DescribeDomainRecordsQuery : AliyunQueryBase
     {
-        public DescribeDomainRecordsQuery(string domainName, string accessKeyId, string action = "DescribeDomainRecords"): base(accessKeyId, action)
+        public DescribeDomainRecordsQuery(string domainName, string accessKeyId, string action = "DescribeDomainRecords") : base(accessKeyId, action)
         {
             DomainName = domainName;
         }

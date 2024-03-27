@@ -1,4 +1,4 @@
-﻿namespace AliyunSDK.DNS.Beans.Aliyun
+﻿namespace AliyunSDK.DNS.Beans.Aliyun.Consts
 {
     /// <summary>
     /// describe：

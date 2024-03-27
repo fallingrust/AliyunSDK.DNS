@@ -1,6 +1,7 @@
 ﻿using AliyunDns.Core;
 using AliyunDns.Core.Beans.Aliyun;
 using AliyunSDK.DNS.Beans.Aliyun;
+using AliyunSDK.DNS.Beans.Aliyun.Query;
 using AliyunSDK.DNS.Beans.Base;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             if (record == null) return null;
+            if (string.IsNullOrEmpty(record.RecordId) || string.IsNullOrEmpty(record.RR) || string.IsNullOrEmpty(record.Type)) return null;
             var query = new UpdateDomainRecordQuery(record.RecordId, record.RR, record.Type, value, _option.KeyId);
             return await GetAsync(query, UpdateDomainRecordResponseSerializerContext.Default.UpdateDomainRecordResponse);
         }
@@ -67,7 +69,12 @@ namespace AliyunSDK.DNS
             return await GetAsync(query, DeleteSubDomainRecordsResponseSerializerContext.Default.DeleteSubDomainRecordsResponse);
         }
 
-
+        public static async Task<UpdateDomainRecordRemarkResponse?> UpdateDomainRecordRemarkAsync(string recordId, string remark)
+        {
+            if (_option == null) return null;
+            var query = new UpdateDomainRecordRemarkQuery(recordId, remark, _option.KeyId);
+            return await GetAsync(query, UpdateDomainRecordRemarkResponseSerializerContext.Default.UpdateDomainRecordRemarkResponse);
+        }
 
 
         private static async Task<Response?> GetAsync<Query, Response>(Query query, JsonTypeInfo<Response> jsonTypeInfo)

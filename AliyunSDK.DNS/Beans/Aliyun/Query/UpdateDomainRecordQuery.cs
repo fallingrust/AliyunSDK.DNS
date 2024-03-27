@@ -1,7 +1,7 @@
 ﻿using AliyunSDK.DNS.Beans.Base;
 using System.Collections.Generic;
 
-namespace AliyunSDK.DNS.Beans.Aliyun
+namespace AliyunSDK.DNS.Beans.Aliyun.Query
 {
     public class UpdateDomainRecordQuery : AliyunQueryBase
     {

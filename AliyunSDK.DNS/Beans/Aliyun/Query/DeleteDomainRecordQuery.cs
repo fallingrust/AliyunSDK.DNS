@@ -1,7 +1,7 @@
 ﻿using AliyunSDK.DNS.Beans.Base;
 using System.Collections.Generic;
 
-namespace AliyunSDK.DNS.Beans.Aliyun
+namespace AliyunSDK.DNS.Beans.Aliyun.Query
 {
     /// <summary>
     /// describe：
@@ -19,7 +19,7 @@ namespace AliyunSDK.DNS.Beans.Aliyun
         public override SortedDictionary<string, string> GetQuery()
         {
             var dic = GetParamsDictionary();
-            dic.Add("RecordId", RecordId);           
+            dic.Add("RecordId", RecordId);
             return dic;
         }
     }
