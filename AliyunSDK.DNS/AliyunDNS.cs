@@ -1,7 +1,9 @@
 ﻿using AliyunDns.Core;
 using AliyunDns.Core.Beans.Aliyun;
 using AliyunSDK.DNS.Beans.Aliyun;
+using AliyunSDK.DNS.Beans.Aliyun.Consts;
 using AliyunSDK.DNS.Beans.Aliyun.Query;
+using AliyunSDK.DNS.Beans.Aliyun.Response;
 using AliyunSDK.DNS.Beans.Base;
 using System;
 using System.Collections.Generic;
@@ -27,18 +29,33 @@ namespace AliyunSDK.DNS
             };
         }
 
+        /// <summary>
+        /// 获取解析记录列表
+        /// </summary>
+        /// <param name="domain">域名名称</param>
+        /// <returns></returns>
         public static async Task<DescribeDomainRecordsResponse?> DescribeDomainRecordsAsync(string domain)
         {
             if (_option == null) return null;
             return await GetAsync(new DescribeDomainRecordsQuery(domain, _option.KeyId), DescribeDomainRecordsResponseSerializerContext.Default.DescribeDomainRecordsResponse);
         }
-
+        /// <summary>
+        /// 获取子域名解析记录列表
+        /// </summary>
+        /// <param name="subDomainName"></param>
+        /// <returns></returns>
         public static async Task<DescribeSubDomainRecordsResponse?> DescribeSubDomainRecordsAsync(string subDomainName)
         {
             if (_option == null) return null;
             return await GetAsync(new DescribeSubDomainRecordsQuery(subDomainName, _option.KeyId), DescribeSubDomainRecordsResponseSerializerContext.Default.DescribeSubDomainRecordsResponse);
         }
 
+        /// <summary>
+        /// 修改域名解析记录
+        /// </summary>
+        /// <param name="record"></param>
+        /// <param name="value">记录值</param>
+        /// <returns></returns>
         public static async Task<UpdateDomainRecordResponse?> UpdateDomainRecordAsync(Record record, string value)
         {
             if (_option == null) return null;
@@ -48,13 +65,26 @@ namespace AliyunSDK.DNS
             return await GetAsync(query, UpdateDomainRecordResponseSerializerContext.Default.UpdateDomainRecordResponse);
         }
 
-        public static async Task<AddDomainRecordResponse?> AddDomainRecordAsync(string domain, string rr, string recordType, string value)
+        /// <summary>
+        /// 添加解析记录
+        /// </summary>
+        /// <param name="domain">域名名称</param>
+        /// <param name="rr">主机记录</param>
+        /// <param name="type">解析记录类型</param>
+        /// <param name="value">记录值</param>
+        /// <returns></returns>
+        public static async Task<AddDomainRecordResponse?> AddDomainRecordAsync(string domain, string rr, string type, string value)
         {
             if (_option == null) return null;
-            var query = new AddDomainRecordQuery(domain, rr, recordType, value, _option.KeyId);
+            var query = new AddDomainRecordQuery(domain, rr, type, value, _option.KeyId);
             return await GetAsync(query, AddDomainRecordResponseSerializerContext.Default.AddDomainRecordResponse);
         }
 
+        /// <summary>
+        /// 删除解析记录
+        /// </summary>
+        /// <param name="recordId">解析记录的 ID</param>
+        /// <returns></returns>
         public static async Task<DeleteDomainRecordResponse?> DeleteDomainRecordAsync(string recordId)
         {
             if (_option == null) return null;
@@ -62,13 +92,26 @@ namespace AliyunSDK.DNS
             return await GetAsync(query, DeleteDomainRecordResponseSerializerContext.Default.DeleteDomainRecordResponse);
         }
 
-        public static async Task<DeleteSubDomainRecordsResponse?> DeleteSubDomainRecordsAsync(string domain, string rr, string recordType, string value)
+        /// <summary>
+        /// 删除主机记录对应的解析记录
+        /// </summary>
+        /// <param name="domain">域名名称</param>
+        /// <param name="rr">主机记录。如果要解析@.exmaple.com，主机记录要填写”@”，而不是空</param>
+        /// <param name="type">解析记录类型。如果不填写，则返回子域名对应的全部解析记录类型</param>
+        /// <returns></returns>
+        public static async Task<DeleteSubDomainRecordsResponse?> DeleteSubDomainRecordsAsync(string domain, string rr, string type)
         {
             if (_option == null) return null;
-            var query = new DeleteSubDomainRecordsQuery(domain, rr, recordType, _option.KeyId);
+            var query = new DeleteSubDomainRecordsQuery(domain, rr, type, _option.KeyId);
             return await GetAsync(query, DeleteSubDomainRecordsResponseSerializerContext.Default.DeleteSubDomainRecordsResponse);
         }
 
+        /// <summary>
+        /// 修改解析记录的备注
+        /// </summary>
+        /// <param name="recordId">解析记录 ID</param>
+        /// <param name="remark">解析记录的备注信息</param>
+        /// <returns></returns>
         public static async Task<UpdateDomainRecordRemarkResponse?> UpdateDomainRecordRemarkAsync(string recordId, string remark)
         {
             if (_option == null) return null;
@@ -76,6 +119,43 @@ namespace AliyunSDK.DNS
             return await GetAsync(query, UpdateDomainRecordRemarkResponseSerializerContext.Default.UpdateDomainRecordRemarkResponse);
         }
 
+        /// <summary>
+        /// 设置解析记录状态
+        /// </summary>
+        /// <param name="recordId">解析记录的 ID</param>
+        /// <param name="status">解析记录状态。取值：Enable: 启用解析 Disable: 暂停解析</param>
+        /// <returns></returns>
+        public static async Task<SetDomainRecordStatusResponse?> SetDomainRecordStatusAsync(string recordId, string status)
+        {
+            if (_option == null) return null;
+            var query = new SetDomainRecordStatusQuery(recordId, status, _option.KeyId);
+            return await GetAsync(query, SetDomainRecordStatusResponseSerializerContext.Default.SetDomainRecordStatusResponse);
+        }
+     
+        /// <summary>
+        /// 获取解析记录的详细信息
+        /// </summary>
+        /// <param name="recordId">解析记录的 ID</param>
+        /// <returns></returns>
+        public static async Task<DescribeDomainRecordInfoResponse?> DescribeDomainRecordInfoAsync(string recordId)
+        {
+            if (_option == null) return null;
+            var query = new DescribeDomainRecordInfoQuery(recordId, _option.KeyId);
+            return await GetAsync(query, DescribeDomainRecordInfoResponseSerializerContext.Default.DescribeDomainRecordInfoResponse);
+        }
+
+        /// <summary>
+        /// 生成txt记录
+        /// </summary>
+        /// <param name="domain">域名名称</param>
+        /// <param name="type">txt 验证的功能。取值：ADD_SUB_DOMAIN、RETRIEVAL</param>
+        /// <returns></returns>
+        public static async Task<GetTxtRecordForVerifyResponse?> GetTxtRecordForVerifyAsync(string domain, string type)
+        {
+            if (_option == null) return null;
+            var query = new GetTxtRecordForVerifyQuery(domain, type, _option.KeyId);
+            return await GetAsync(query, GetTxtRecordForVerifyResponseSerializerContext.Default.GetTxtRecordForVerifyResponse);
+        }
 
         private static async Task<Response?> GetAsync<Query, Response>(Query query, JsonTypeInfo<Response> jsonTypeInfo)
             where Query : AliyunQueryBase

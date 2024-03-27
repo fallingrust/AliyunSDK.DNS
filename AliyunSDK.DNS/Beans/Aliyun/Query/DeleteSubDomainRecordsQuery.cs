@@ -10,21 +10,21 @@ namespace AliyunSDK.DNS.Beans.Aliyun.Query
     /// </summary>
     public class DeleteSubDomainRecordsQuery : AliyunQueryBase
     {
-        public DeleteSubDomainRecordsQuery(string domainName, string rr, string recordType, string accessKeyId, string action = "DeleteSubDomainRecords") : base(accessKeyId, action)
+        public DeleteSubDomainRecordsQuery(string domainName, string rr, string type, string accessKeyId, string action = "DeleteSubDomainRecords") : base(accessKeyId, action)
         {
             DomainName = domainName;
             RR = rr;
-            RecordType = recordType;
+            Type = type;
         }
         public string DomainName { get; set; }
         public string RR { get; set; }
-        public string RecordType { get; set; }
+        public string Type { get; set; }
         public override SortedDictionary<string, string> GetQuery()
         {
             var dic = GetParamsDictionary();
             dic.Add("DomainName", DomainName);
             dic.Add("RR", RR);
-            dic.Add("Type", RecordType);
+            dic.Add("Type", Type);
             return dic;
         }
     }

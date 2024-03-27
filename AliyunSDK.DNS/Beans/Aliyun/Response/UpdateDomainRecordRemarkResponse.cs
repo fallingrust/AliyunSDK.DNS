@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace AliyunSDK.DNS.Beans.Aliyun
+namespace AliyunSDK.DNS.Beans.Aliyun.Response
 {
     /// <summary>
     /// describe：
