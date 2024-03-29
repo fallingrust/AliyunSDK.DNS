@@ -19,7 +19,7 @@ namespace AliyunDns.Core.Beans.Aliyun
 
         public string? Status { get; set; }
 
-        public int TTL { get; set; }
+        public long TTL { get; set; }
 
         public string? Type { get; set; }
 
@@ -38,11 +38,11 @@ namespace AliyunDns.Core.Beans.Aliyun
     {
         public DomainRecords? DomainRecords { get; set; }
 
-        public int PageNumber { get; set; }
+        public long PageNumber { get; set; }
 
-        public int PageSize { get; set; }       
+        public long PageSize { get; set; }       
 
-        public int TotalCount { get; set; }
+        public long TotalCount { get; set; }
     }
 
     [JsonSourceGenerationOptions(WriteIndented = true)]

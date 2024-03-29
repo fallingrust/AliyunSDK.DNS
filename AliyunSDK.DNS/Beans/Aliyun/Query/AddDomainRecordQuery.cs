@@ -27,7 +27,7 @@ namespace AliyunSDK.DNS.Beans.Aliyun.Query
             var dic = GetParamsDictionary();
             dic.Add("DomainName", DomainName);
             dic.Add("RR", RR);
-            dic.Add("Type", RecordType);
+            dic.Add("Type", Type);
             dic.Add("Value", Value);
             return dic;
         }

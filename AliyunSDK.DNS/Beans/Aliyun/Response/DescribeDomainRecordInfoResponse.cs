@@ -19,17 +19,17 @@ namespace AliyunSDK.DNS.Beans.Aliyun.Response
        
         public string? DomainName { get; set; }
        
-        public int Priority { get; set; }
+        public long Priority { get; set; }
        
         public string? PunyCode { get; set; }
       
-        public int TTL { get; set; }
+        public long TTL { get; set; }
       
         public string? GroupId { get; set; }
         
         public string? Line { get; set; }
      
-        public string? Locked { get; set; }
+        public bool Locked { get; set; }
        
         public string? Type { get; set; }
      

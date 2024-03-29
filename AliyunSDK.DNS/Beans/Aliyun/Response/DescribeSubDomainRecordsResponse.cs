@@ -10,7 +10,7 @@ namespace AliyunDns.Core.Beans.Aliyun
         public string? Type { get; set; }
         public int Weight { get; set; }
         public string? Value { get; set; }
-        public int TTL { get; set; }
+        public long TTL { get; set; }
         public string? Line { get; set; }
         public string? RecordId { get; set; }
         public int Priority { get; set; }
