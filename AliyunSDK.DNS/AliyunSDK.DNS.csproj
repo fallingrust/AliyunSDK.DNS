@@ -1,7 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFrameworks>net6</TargetFrameworks>
-    <Nullable>enable</Nullable>
-  </PropertyGroup> 
+	<PropertyGroup>
+		<TargetFrameworks>net6</TargetFrameworks>
+		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Version>0.0.0.1</Version>
+		<Title>阿里云 DNS</Title>
+		<Authors>fallingrust</Authors>
+		<Company>fallingrust</Company>
+		<Description>阿里云 DNS SDK,支持AOT</Description>
+		<PackageProjectUrl>https://github.com/fallingrust/AliyunSDK.DNS</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/fallingrust/AliyunSDK.DNS</RepositoryUrl>
+	</PropertyGroup>
 </Project>
