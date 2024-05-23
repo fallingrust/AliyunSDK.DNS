@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>net6</TargetFrameworks>
+	<PropertyGroup>		
+		<TargetFrameworks>net6;netstandard2.1</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Version>0.0.0.1</Version>
@@ -11,4 +11,7 @@
 		<PackageProjectUrl>https://github.com/fallingrust/AliyunSDK.DNS</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/fallingrust/AliyunSDK.DNS</RepositoryUrl>
 	</PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+	  <PackageReference Include="System.Text.Json" Version="8.0.3" />
+	</ItemGroup>
 </Project>

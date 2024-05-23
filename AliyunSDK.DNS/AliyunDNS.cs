@@ -21,7 +21,7 @@ namespace AliyunSDK.DNS
         private static HttpClient? _client;
         private static Option? _option;
         public static void Configure(Option option)
-        {
+        {            
             _option = option;
             _client = new HttpClient
             {
@@ -37,7 +37,11 @@ namespace AliyunSDK.DNS
         public static async Task<DescribeDomainRecordsResponse?> DescribeDomainRecordsAsync(string domain)
         {
             if (_option == null) return null;
+#if NET6_0_OR_GREATER
             return await GetAsync(new DescribeDomainRecordsQuery(domain, _option.KeyId), DescribeDomainRecordsResponseSerializerContext.Default.DescribeDomainRecordsResponse);
+#else
+            return await GetAsync<DescribeDomainRecordsQuery, DescribeDomainRecordsResponse>(new DescribeDomainRecordsQuery(domain, _option.KeyId));
+#endif
         }
         /// <summary>
         /// 获取子域名解析记录列表
@@ -47,7 +51,11 @@ namespace AliyunSDK.DNS
         public static async Task<DescribeSubDomainRecordsResponse?> DescribeSubDomainRecordsAsync(string subDomainName)
         {
             if (_option == null) return null;
+#if NET6_0_OR_GREATER
             return await GetAsync(new DescribeSubDomainRecordsQuery(subDomainName, _option.KeyId), DescribeSubDomainRecordsResponseSerializerContext.Default.DescribeSubDomainRecordsResponse);
+#else
+            return await GetAsync<DescribeSubDomainRecordsQuery, DescribeSubDomainRecordsResponse>(new DescribeSubDomainRecordsQuery(subDomainName, _option.KeyId));
+#endif
         }
 
         /// <summary>
@@ -62,7 +70,11 @@ namespace AliyunSDK.DNS
             if (record == null) return null;
             if (string.IsNullOrEmpty(record.RecordId) || string.IsNullOrEmpty(record.RR) || string.IsNullOrEmpty(record.Type)) return null;
             var query = new UpdateDomainRecordQuery(record.RecordId, record.RR, record.Type, value, _option.KeyId);
+#if NET6_0_OR_GREATER
             return await GetAsync(query, UpdateDomainRecordResponseSerializerContext.Default.UpdateDomainRecordResponse);
+#else
+            return await GetAsync<UpdateDomainRecordQuery, UpdateDomainRecordResponse>(query);
+#endif
         }
 
         /// <summary>
@@ -77,7 +89,11 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             var query = new AddDomainRecordQuery(domain, rr, type, value, _option.KeyId);
-            return await GetAsync(query, AddDomainRecordResponseSerializerContext.Default.AddDomainRecordResponse);
+#if NET6_0_OR_GREATER
+           return await GetAsync(query, AddDomainRecordResponseSerializerContext.Default.AddDomainRecordResponse);
+#else
+            return await GetAsync<AddDomainRecordQuery, AddDomainRecordResponse>(query);
+#endif
         }
 
         /// <summary>
@@ -89,7 +105,11 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             var query = new DeleteDomainRecordQuery(recordId, _option.KeyId);
+#if NET6_0_OR_GREATER
             return await GetAsync(query, DeleteDomainRecordResponseSerializerContext.Default.DeleteDomainRecordResponse);
+#else
+            return await GetAsync<DeleteDomainRecordQuery, DeleteDomainRecordResponse>(query);
+#endif
         }
 
         /// <summary>
@@ -103,7 +123,11 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             var query = new DeleteSubDomainRecordsQuery(domain, rr, type, _option.KeyId);
+#if NET6_0_OR_GREATER
             return await GetAsync(query, DeleteSubDomainRecordsResponseSerializerContext.Default.DeleteSubDomainRecordsResponse);
+#else
+            return await GetAsync<DeleteSubDomainRecordsQuery, DeleteSubDomainRecordsResponse>(query);
+#endif
         }
 
         /// <summary>
@@ -116,7 +140,11 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             var query = new UpdateDomainRecordRemarkQuery(recordId, remark, _option.KeyId);
+#if NET6_0_OR_GREATER
             return await GetAsync(query, UpdateDomainRecordRemarkResponseSerializerContext.Default.UpdateDomainRecordRemarkResponse);
+#else
+            return await GetAsync<UpdateDomainRecordRemarkQuery, UpdateDomainRecordRemarkResponse>(query);
+#endif
         }
 
         /// <summary>
@@ -129,7 +157,11 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             var query = new SetDomainRecordStatusQuery(recordId, status, _option.KeyId);
+#if NET6_0_OR_GREATER
             return await GetAsync(query, SetDomainRecordStatusResponseSerializerContext.Default.SetDomainRecordStatusResponse);
+#else
+            return await GetAsync<SetDomainRecordStatusQuery, SetDomainRecordStatusResponse>(query);
+#endif
         }
      
         /// <summary>
@@ -141,7 +173,11 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             var query = new DescribeDomainRecordInfoQuery(recordId, _option.KeyId);
+#if NET6_0_OR_GREATER
             return await GetAsync(query, DescribeDomainRecordInfoResponseSerializerContext.Default.DescribeDomainRecordInfoResponse);
+#else
+            return await GetAsync<DescribeDomainRecordInfoQuery, DescribeDomainRecordInfoResponse>(query);
+#endif
         }
 
         /// <summary>
@@ -154,9 +190,13 @@ namespace AliyunSDK.DNS
         {
             if (_option == null) return null;
             var query = new GetTxtRecordForVerifyQuery(domain, type, _option.KeyId);
+#if NET6_0_OR_GREATER
             return await GetAsync(query, GetTxtRecordForVerifyResponseSerializerContext.Default.GetTxtRecordForVerifyResponse);
+#else
+            return await GetAsync<GetTxtRecordForVerifyQuery, GetTxtRecordForVerifyResponse>(query);
+#endif
         }
-
+#if NET6_0_OR_GREATER
         private static async Task<Response?> GetAsync<Query, Response>(Query query, JsonTypeInfo<Response> jsonTypeInfo)
             where Query : AliyunQueryBase
             where Response : AliyunResponseBase
@@ -170,7 +210,21 @@ namespace AliyunSDK.DNS
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize(content, jsonTypeInfo);
         }
-
+#else
+        private static async Task<Response?> GetAsync<Query, Response>(Query query)
+           where Query : AliyunQueryBase
+           where Response : AliyunResponseBase
+        {
+            if (_client == null) return null;
+            if (_option == null) return null;
+            var queryStr = BuildQueryString(query.GetQuery());
+            var signedStr = Signature("GET", _option.KeySecret, queryStr);
+            var url = $"?Signature={signedStr}&{queryStr}";
+            var response = await _client.GetAsync(url);
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<Response>(content);
+        }
+#endif
         private static string BuildQueryString(SortedDictionary<string, string> paramDic)
         {
             var sb = new StringBuilder();

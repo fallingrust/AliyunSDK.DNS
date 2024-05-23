@@ -1,6 +1,8 @@
 ﻿using AliyunSDK.DNS.Beans.Base;
-using System.Collections.Generic;
+#if NET6_0_OR_GREATER
 using System.Text.Json.Serialization;
+using System.Collections.Generic;
+#endif
 
 namespace AliyunSDK.DNS.Beans.Aliyun.Response
 {
@@ -41,10 +43,12 @@ namespace AliyunSDK.DNS.Beans.Aliyun.Response
       
         public string? Remark { get; set; }
     }
+#if NET6_0_OR_GREATER
     [JsonSourceGenerationOptions(WriteIndented = true)]
     [JsonSerializable(typeof(DescribeDomainRecordInfoResponse))]
     [JsonSerializable(typeof(IEnumerable<DescribeDomainRecordInfoResponse>))]
     public partial class DescribeDomainRecordInfoResponseSerializerContext : JsonSerializerContext
     {
     }
+#endif
 }
