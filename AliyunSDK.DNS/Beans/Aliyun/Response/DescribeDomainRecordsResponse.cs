@@ -1,6 +1,9 @@
 ﻿using AliyunSDK.DNS.Beans.Base;
 using System.Collections.Generic;
+#if NET6_0_OR_GREATER
 using System.Text.Json.Serialization;
+#endif
+
 namespace AliyunDns.Core.Beans.Aliyun
 {
     public class Record
@@ -44,7 +47,7 @@ namespace AliyunDns.Core.Beans.Aliyun
 
         public long TotalCount { get; set; }
     }
-
+#if NET6_0_OR_GREATER
     [JsonSourceGenerationOptions(WriteIndented = true)]
     [JsonSerializable(typeof(DescribeDomainRecordsResponse))]
     [JsonSerializable(typeof(IEnumerable<DescribeDomainRecordsResponse>))]
@@ -65,4 +68,5 @@ namespace AliyunDns.Core.Beans.Aliyun
     public partial class RecordSerializerContext : JsonSerializerContext
     {
     }
+#endif
 }

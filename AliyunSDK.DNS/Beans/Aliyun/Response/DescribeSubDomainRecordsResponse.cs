@@ -1,6 +1,8 @@
 ﻿using AliyunSDK.DNS.Beans.Base;
 using System.Collections.Generic;
+#if NET6_0_OR_GREATER
 using System.Text.Json.Serialization;
+#endif
 
 namespace AliyunDns.Core.Beans.Aliyun
 {
@@ -34,6 +36,7 @@ namespace AliyunDns.Core.Beans.Aliyun
 
         public int TotalCount { get; set; }
     }
+#if NET6_0_OR_GREATER
     [JsonSourceGenerationOptions(WriteIndented = true)]
     [JsonSerializable(typeof(DescribeSubDomainRecordsResponse))]
     [JsonSerializable(typeof(IEnumerable<DescribeSubDomainRecordsResponse>))]
@@ -54,4 +57,5 @@ namespace AliyunDns.Core.Beans.Aliyun
     public partial class SubRecordSerializerContext : JsonSerializerContext
     {
     }
+#endif
 }
