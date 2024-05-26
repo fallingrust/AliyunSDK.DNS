@@ -1,5 +1,7 @@
 ﻿using AliyunSDK.DNS.Beans.Base;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AliyunSDK.DNS.Beans.Aliyun.Query
 {
@@ -18,14 +20,22 @@ namespace AliyunSDK.DNS.Beans.Aliyun.Query
         public string Type { get; set; } = "";
         public string Value { get; set; } = "";
 
-        public override SortedDictionary<string, string> GetQuery()
+        public override Dictionary<string, string> GetQuery()
         {
             var dic = GetParamsDictionary();
             dic.Add("RecordId", RecordId);
             dic.Add("RR", RR);
             dic.Add("Type", Type);
             dic.Add("Value", Value);
-            return dic;
+            return dic.OrderBy(p => p.Key, new OrdinalComparer()).ToDictionary(x => x.Key, y => y.Value);
+        }
+    }
+
+    public class OrdinalComparer : IComparer<string>
+    {
+        public int Compare(string? x, string? y)
+        {
+            return string.CompareOrdinal(x, y);
         }
     }
 }

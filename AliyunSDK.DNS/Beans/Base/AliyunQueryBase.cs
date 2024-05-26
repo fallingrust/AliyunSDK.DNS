@@ -19,11 +19,11 @@ namespace AliyunSDK.DNS.Beans.Base
         public string SignatureMethod { get; set; } = "HMAC-SHA1";
         public string SignatureVersion { get; set; } = "1.0";
 
-        public abstract SortedDictionary<string, string> GetQuery();
+        public abstract Dictionary<string, string> GetQuery();
        
-        protected SortedDictionary<string,string> GetParamsDictionary()
+        protected Dictionary<string,string> GetParamsDictionary()
         {
-            return new SortedDictionary<string, string>()
+            return new Dictionary<string, string>()
             {
                 { "Action", Action },
                 { "Version", Version },

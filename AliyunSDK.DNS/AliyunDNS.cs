@@ -225,7 +225,7 @@ namespace AliyunSDK.DNS
             return JsonSerializer.Deserialize<Response>(content);
         }
 #endif
-        private static string BuildQueryString(SortedDictionary<string, string> paramDic)
+        private static string BuildQueryString(Dictionary<string, string> paramDic)
         {
             var sb = new StringBuilder();
             foreach (var kv in paramDic)
